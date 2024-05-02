@@ -6,9 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.todolist.fragment.DoneFragment
-import com.example.todolist.fragment.TodoFragment
+import com.example.todolist.fragments.DoneFragment
+import com.example.todolist.fragments.TodoFragment
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.viewmodel.MyViewModel
 
 class MainActivity : AppCompatActivity() {
     private val mBinding: ActivityMainBinding by lazy {
