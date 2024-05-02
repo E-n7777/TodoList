@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.fragment.DoneFragment
+import com.example.todolist.fragment.TodoFragment
 import com.example.todolist.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,30 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(mBinding.root)
+        initMenu()
     }
 
+    private fun initMenu() {
+        val todoFragment = TodoFragment()
+        val doneFragment = DoneFragment()
+
+        val bottomNav = mBinding.bottomNavigationView
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.todoFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, todoFragment)
+                        .commit()
+                    true
+                }
+                R.id.doneFragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, doneFragment)
+                        .commit()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 }
