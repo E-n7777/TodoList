@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.FragmentTodoBinding
-import com.example.todolist.todoAdapter
+import com.example.todolist.Adapters.todoAdapter
 import com.example.todolist.viewmodel.TaskViewModel
 
 class TodoFragment : Fragment() {
@@ -64,12 +64,9 @@ class TodoFragment : Fragment() {
     }
 
     fun initRv() {
-        val todoAdapter = todoAdapter(todoList)
+        val todoAdapter = todoAdapter(todoList, mViewModel)
         mbinding!!.rvTodo.apply {
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                LinearLayoutManager.VERTICAL, false
-            )
+            layoutManager = LinearLayoutManager(requireContext())
             mbinding!!.rvTodo.adapter = todoAdapter
         }
         todoAdapter.notifyDataSetChanged()
