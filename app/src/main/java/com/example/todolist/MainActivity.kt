@@ -6,17 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.fragments.DoneFragment
 import com.example.todolist.fragments.TodoFragment
-import com.example.todolist.databinding.ActivityMainBinding
-import com.example.todolist.viewmodel.MyViewModel
+import com.example.todolist.viewmodel.TaskViewModel
 
 class MainActivity : AppCompatActivity() {
     private val mBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val mViewModel by lazy {
-        ViewModelProvider(this)[MyViewModel::class.java]
+        ViewModelProvider(this)[TaskViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
