@@ -2,6 +2,7 @@ package com.example.todolist.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.databinding.FragmentTodoBinding
-import com.example.todolist.Adapters.todoAdapter
+import com.example.todolist.Adapters.TodoAdapter
+import com.example.todolist.TodoItem
 import com.example.todolist.viewmodel.TaskViewModel
 
 class TodoFragment : Fragment() {
     private lateinit var mViewModel: TaskViewModel
-
+    private lateinit var todoAdapter: TodoAdapter
     private var mbinding: FragmentTodoBinding? = null
-    val todoList = mutableListOf<String>()
+
+    var taskList = mutableListOf<TodoItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +42,10 @@ class TodoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initChange()
-        mViewModel.taskList.addAll(todoList)
     }
 
     private fun initChange() {
-        if (todoList.isEmpty()) {
+        if (taskList.isEmpty()) {
             mbinding!!.tvWarnNull.visibility = View.VISIBLE
         } else {
             mbinding!!.tvWarnNull.visibility = View.GONE
@@ -54,22 +56,28 @@ class TodoFragment : Fragment() {
             if (mbinding!!.etAdd.text.trim().isEmpty()) {
                 requireContext().toast("您还没有输入任何待办事项哦")
             } else {
-                val addTask = mbinding!!.etAdd.text.toString()
+                val todoItem = TodoItem(mbinding!!.etAdd.text.toString())
+                taskList.add(todoItem)
                 mbinding!!.etAdd.text.clear()
-
-                todoList.add(addTask)
+                Log.d("todoItem.task", "initChange-->"+taskList)
                 initRv()
             }
         }
     }
 
-    fun initRv() {
-        val todoAdapter = todoAdapter(todoList, mViewModel)
+    private fun initRv() {
+        todoAdapter=TodoAdapter(mViewModel.todoList.value ?: emptyList()) { todoItem ->
+            mViewModel.checkboxChecked(todoItem)
+        }
         mbinding!!.rvTodo.apply {
             layoutManager = LinearLayoutManager(requireContext())
             mbinding!!.rvTodo.adapter = todoAdapter
         }
-        todoAdapter.notifyDataSetChanged()
+        mViewModel.todoList.observe(requireActivity()){todoList->
+            taskList= todoList.toMutableList()
+            todoAdapter.updateList(todoList)
+        }
+        Log.d("taskList", "initRv-->"+mViewModel.todoList)
     }
 
     fun Context.toast(message: CharSequence) {

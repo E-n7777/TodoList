@@ -7,9 +7,13 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
+import com.example.todolist.TodoItem
 
-class doneAdapter(private val taskList: List<String>) :
-    RecyclerView.Adapter<doneAdapter.DoneViewHolder>() {
+class DoneAdapter(
+    private var taskList: List<TodoItem>,
+    private val onDoneClickListener: (TodoItem) -> Unit
+) :
+    RecyclerView.Adapter<DoneAdapter.DoneViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoneViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -19,16 +23,28 @@ class doneAdapter(private val taskList: List<String>) :
 
     override fun onBindViewHolder(holder: DoneViewHolder, position: Int) {
         val userInput = taskList[position]
-        holder.item_text.text = userInput
-        holder.item_check.isChecked = true
+        holder.bind(userInput)
     }
 
     override fun getItemCount(): Int {
         return taskList.size
     }
 
+    fun updateList(doneList: List<TodoItem>) {
+        taskList = doneList
+        notifyDataSetChanged()
+    }
+
     inner class DoneViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val item_text: TextView = view.findViewById(R.id.tv_item)
         val item_check: CheckBox = view.findViewById(R.id.checkBox)
+        val item: View = view.findViewById(R.id.layout_item_list)
+        fun bind(userDone: TodoItem) {
+            item_text.text = userDone.task
+            item_check.isChecked = userDone.isCompleted
+            item.setOnClickListener { onDoneClickListener(userDone) }
+        }
+
+
     }
 }
