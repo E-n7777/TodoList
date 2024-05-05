@@ -20,7 +20,7 @@ class TodoRvAdapter(
         }
 
         override fun areContentsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
-            return oldItem.task == newItem.task
+            return oldItem.task == newItem.task && oldItem.isCompleted == newItem.isCompleted
         }
 
     },
@@ -33,9 +33,10 @@ class TodoRvAdapter(
             item_text.text = userInput.task
             item_check.isChecked = userInput.isCompleted
 
-            item_check.setOnCheckedChangeListener { buttonView, isChecked ->
+            item_check.setOnClickListener {
                 onTodoClickListener(userInput)
             }
+
 
         }
     }
