@@ -55,7 +55,7 @@ class DoneFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = doneAdapter
         }
-        mViewModel.doneList.observe(requireActivity()) { doneList ->
+        mViewModel.doneList.observe(viewLifecycleOwner) { doneList ->
             if (doneList.isEmpty()) {
                 mbinding?.tvWarnDone?.visibility = View.VISIBLE
             } else {

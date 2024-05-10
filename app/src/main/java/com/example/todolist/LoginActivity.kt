@@ -47,7 +47,10 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         Toast.makeText(this, "欢迎登陆~", Toast.LENGTH_SHORT).show()
                         startActivity(intent)
-                    } else {
+                        finish()
+                    } else if(!sp.contains(etLoginName)){
+                        Toast.makeText(this, "未注册", Toast.LENGTH_SHORT).show()
+                    }else{
                         Toast.makeText(this, "登陆失败", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -61,4 +64,5 @@ class LoginActivity : AppCompatActivity() {
         mBinding.btnLoginSignIn.setOnClickListener(clickListener)
         mBinding.btnLoginSignUp.setOnClickListener(clickListener)
     }
+
 }

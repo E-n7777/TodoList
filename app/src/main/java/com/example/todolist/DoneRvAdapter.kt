@@ -13,7 +13,7 @@ class DoneRvAdapter(
     private val onDoneClickListener: (TodoItem) -> Unit
 ) : ListAdapter<TodoItem, DoneRvAdapter.ViewHolder>(object : DiffUtil.ItemCallback<TodoItem>() {
     override fun areItemsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: TodoItem, newItem: TodoItem): Boolean {
@@ -41,9 +41,11 @@ class DoneRvAdapter(
         fun bind(userDone: TodoItem) {
             item_text.text = userDone.task
             item_check.isChecked = userDone.isCompleted
-            item_check.setOnCheckedChangeListener { buttonView, isChecked ->
+            item_check.setOnClickListener {
                 onDoneClickListener(userDone)
+
             }
+
         }
     }
 

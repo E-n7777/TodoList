@@ -2,7 +2,6 @@ package com.example.todolist.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,8 @@ class TodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 初始化 ViewModel
-        mViewModel = ViewModelProvider(requireActivity()).get(TaskViewModel::class.java)
+        mViewModel = ViewModelProvider(requireActivity())[TaskViewModel::class.java]
+        //mViewModel.init(requireActivity().application)
     }
 
     override fun onCreateView(
@@ -46,18 +46,20 @@ class TodoFragment : Fragment() {
         initClick()
         initRv()
 
-        val itemHelper = ItemTouchHelper(TodoSwipeDelete(mViewModel,todoAdapter))
+        val itemHelper = ItemTouchHelper(TodoSwipeDelete(mViewModel, todoAdapter))
         itemHelper.attachToRecyclerView(mbinding?.rvTodo)
 
     }
 
     private fun initClick() {
+        var itemId: Int = 1
         mbinding?.imgAdd?.setOnClickListener {
             if (mbinding!!.etAdd.text.trim().isEmpty()) {
                 requireContext().toast("您还没有输入任何待办事项哦")
             } else {
 
-                val newItem = TodoItem(mbinding!!.etAdd.text.toString())
+                val newItem = TodoItem(itemId++, mbinding!!.etAdd.text.toString())
+
                 mViewModel.addTask(newItem)
                 mbinding!!.etAdd.text.clear()
 
@@ -77,7 +79,7 @@ class TodoFragment : Fragment() {
             adapter = todoAdapter
         }
 
-        mViewModel.todoList.observe(requireActivity()) { todoList ->
+        mViewModel.todoList.observe(viewLifecycleOwner) { todoList ->
             if (todoList.isEmpty()) {
                 mbinding!!.tvWarnNull.visibility = View.VISIBLE
             } else {
@@ -89,7 +91,12 @@ class TodoFragment : Fragment() {
         }
     }
 
-    fun Context.toast(message: CharSequence) {
+    /*fun getSavedList(){
+        val sp: SharedPreferences = getSharedPreferences("self", Context.MODE_PRIVATE)
+
+    }*/
+
+    private fun Context.toast(message: CharSequence) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
