@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.TodoItem
 import com.example.todolist.DoneRvAdapter
-import com.example.todolist.DoneSwipeDelete
+import com.example.todolist.itemtouchhelpers.DoneSwipeDelete
 import com.example.todolist.databinding.FragmentDoneBinding
 import com.example.todolist.viewmodel.TaskViewModel
 

@@ -1,7 +1,8 @@
-package com.example.todolist
+package com.example.todolist.itemtouchhelpers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.DoneRvAdapter
 import com.example.todolist.viewmodel.TaskViewModel
 
 class DoneSwipeDelete(

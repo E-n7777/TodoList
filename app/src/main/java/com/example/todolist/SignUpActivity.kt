@@ -65,7 +65,6 @@ class SignUpActivity : AppCompatActivity() {
 
                         Toast.makeText(this, "恭喜您，注册成功！\n请重新登录", Toast.LENGTH_SHORT)
                             .show()
-                        //saveList(editor, etPass)
                         finish()
                     }
                 }
@@ -75,14 +74,6 @@ class SignUpActivity : AppCompatActivity() {
         mBinding.btnSignUp.setOnClickListener(clickListener)
     }
 
-    /*fun saveList(editor: Editor, etPass: String): List<TodoItem> {
-        val taskList = mutableListOf<TodoItem>()
-        val taskListJson = Gson().toJson(taskList)
-        editor.putString(etPass, taskListJson)
-        editor.apply()
-
-        return taskList
-    }*/
 
 }
 
