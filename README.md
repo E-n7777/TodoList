@@ -26,9 +26,6 @@
 * 使用LiveData及时对任务列表进行更改
 
 
-# APP功能的展示
-
-
 # 技术亮点
 
 * LiveData和ViewModel结合对待办事项变化进行观察，及时更新界面
